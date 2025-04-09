@@ -127,6 +127,8 @@ p {
     border: 3px solid #F4E1C1;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
+
+/* --- AJUSTER L'ESPACEMENT DANS LES SOUS-CARTES --- */
 .sub-card h1 {
     font-size: 2rem; /* Titre légèrement plus petit ? */
     margin-top: 0.5rem; /* Un peu d'espace en haut */
