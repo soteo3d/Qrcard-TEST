@@ -4,60 +4,62 @@
 }
 
 html {
-    overscroll-behavior: none;
+    overscroll-behavior: none; /* Empêche le rebond sur mobile */
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: 'Raleway', sans-serif;
-    background: #4DB6AC;
-    display: flex;
+    background: #4DB6AC; /* Fond bleu-vert */
+    display: flex; /* Pour centrer le .card-container initialement */
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    perspective: 1000px; /* IMPORTANT: Active la perspective pour l'effet 3D */
-    overflow: hidden;
+    perspective: 1000px; /* Perspective pour l'effet 3D du conteneur */
+    overflow: hidden; /* Empêche les barres de défilement */
 }
 
+/* === Sélection initiale Genre === */
 .gender-selection {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 360px; /* Même taille que les cartes */
-    padding: 2rem;
-    background: linear-gradient(135deg, #1A3C40, #0D2F32); /* Même style que le front */
-    border-radius: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    display: flex; /* Visible par défaut au chargement */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 200; /* Au-dessus de tout au début */
-}
-
-.gender-selection h1 {
-    margin-bottom: 0.5rem; /* Moins d'espace après H1 */
-}
-
-.gender-btn {
-    min-width: 150px; /* Largeur minimale pour les boutons */
-    margin: 0.75rem 0; /* Espacement vertical */
-}
-
-/* === NOUVEAU : Style Résultat Homme === */
-.result-homme {
-    position: fixed;
+    position: fixed; /* Centré sur l'écran */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 360px;
     padding: 2rem;
-    background: #0A1D1C; /* Style sombre comme le back ou sub-card */
+    background: linear-gradient(135deg, #1A3C40, #0D2F32); /* Style carte */
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex; /* Affiché au chargement */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 200;
+}
+
+.gender-selection h1 {
+    margin-bottom: 0.5rem;
+    color: #F4E1C1; /* Couleur titre */
+}
+
+.gender-btn {
+    min-width: 150px;
+    margin: 0.75rem 0;
+}
+
+/* === Résultat si Homme === */
+.result-homme {
+    position: fixed; /* Centré sur l'écran */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 360px;
+    padding: 2rem;
+    background: #0A1D1C; /* Fond sombre */
     border-radius: 1.5rem;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     display: none; /* Caché par défaut */
@@ -65,115 +67,88 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    z-index: 199; /* Juste au cas où */
+    z-index: 199;
 }
 
 .result-homme img {
-    max-width: 80%; /* Limite la taille de l'image */
+    max-width: 80%;
     height: auto;
-    max-height: 300px; /* Limite la hauteur */
-    border-radius: 1rem; /* Coins arrondis pour l'image */
+    max-height: 300px;
+    border-radius: 1rem;
 }
 
-/* style.css - Debugging Attempt 3 - Style Minimaliste */
+/* === Conteneur Principal (pour le flip) === */
 .card-container {
-    /* --- Dimensions Fixes Simples --- */
-    width: 300px !important;
-    height: 400px !important;
-
-    /* --- Positionnement Fixe Simple --- */
-    position: fixed !important;
-    top: 50px !important;   /* Position depuis le haut */
-    left: 50px !important;  /* Position depuis la gauche */
-    /* PAS de transform: translate() ici */
-
-    /* --- On enlève tout ce qui est lié à l'animation/3D --- */
-    /* transition: ... ; (ENLEVÉ) */
-    /* transform-style: ... ; (ENLEVÉ) */
-
-    display: none !important; /* Garder état initial caché */
-
-    /* --- Styles de Debug Visibles --- */
-    background-color: red !important;
-    z-index: 1000 !important; /* Z-index très élevé */
-    border: 5px solid yellow !important; /* Bordure pour être sûr */
-    /* --- Fin Debug --- */
+    width: 90%;
+    max-width: 360px;
+    height: 500px;
+    position: relative; /* Positionné par rapport au flux normal (centré par body flex) */
+    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animation du flip */
+    transform-style: preserve-3d; /* Active la 3D pour les enfants */
+    display: none; /* Caché initialement (sera affiché par JS) - SANS !important */
 }
 
-/* Classe ajoutée par JS pour retourner */
+/* Classe ajoutée par JS pour retourner le conteneur */
 .card-container.is-flipped {
     transform: rotateY(180deg);
 }
 
-/* === Cartes Principales (Recto/Verso) === */
+/* === Cartes Principales (Recto/Verso à l'intérieur du conteneur) === */
 .card {
-    position: absolute; /* IMPORTANT: Permet de superposer recto et verso */
+    position: absolute; /* Superposées dans le .card-container */
     width: 100%;
     height: 100%;
-    top: 0;  /* Assurer la position */
-    left: 0; /* Assurer la position */
+    top: 0;
+    left: 0;
     border-radius: 1.5rem;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Contenu centré */
     padding: 1.5rem;
     text-align: center;
-    backface-visibility: hidden; /* IMPORTANT: Cache le côté non visible pendant la rotation (Appliqué aux deux via cette classe commune) */
-    overflow: hidden;
-    /* On s'assure qu'il n'y a pas de rotation par défaut ici */
-    transform: rotateY(0deg);
+    backface-visibility: hidden; /* Cache la face arrière lors de la rotation */
+    overflow: hidden; /* Empêche le contenu de déborder */
+    transform: rotateY(0deg); /* État initial (pour le front) */
 }
 
 .card.front {
-    background: linear-gradient(135deg, #1A3C40, #0D2F32);
-    z-index: 2; /* IMPORTANT: Doit être au-dessus du verso initialement */
-    cursor: pointer;
-    /* Aucune transformation ici, hérite de rotateY(0deg) de .card */
+    background: linear-gradient(135deg, #1A3C40, #0D2F32); /* Fond Front */
+    z-index: 2; /* Devant le back initialement */
+    cursor: pointer; /* Indique cliquable */
 }
 
 .card.back {
-    background: linear-gradient(135deg, #0A1D1C, #071614);
-    transform: rotateY(180deg); /* IMPORTANT: Positionné au dos initialement */
-    z-index: 1; /* IMPORTANT: Doit être en dessous du recto initialement */
+    background: linear-gradient(135deg, #0A1D1C, #071614); /* Fond Back */
+    transform: rotateY(180deg); /* Tourné à 180 degrés initialement */
+    z-index: 1; /* Derrière le front initialement */
 }
 
-/* === Sous-Cartes (Positionnées indépendamment au-dessus de tout) === */
+/* === Sous-Cartes (Moi, Passions - Positionnées indépendamment) === */
 .sub-card {
-    /* --- POSITIONNEMENT FIXE --- */
-    position: fixed; /* Fixe par rapport à la fenêtre du navigateur */
-    top: 50%;       /* Positionné à 50% du haut */
-    left: 50%;      /* Positionné à 50% de la gauche */
-    transform: translate(-50%, -50%); /* Astuce pour centrer parfaitement l'élément */
-
-    /* --- TAILLE (Similaire à la carte principale) --- */
+    position: fixed; /* Flotte au-dessus de tout, centré */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 90%;
     max-width: 360px;
-    height: 500px; /* Ajuste si besoin, ou utilise min-height/max-height */
-
-    /* --- STYLE VISUEL --- */
+    height: 500px; /* Hauteur fixe */
     border-radius: 1.5rem;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.35); /* Ombre un peu plus marquée */
-    background: #174743; /* Ou une autre couleur si tu veux contraster */
-
-    /* --- CONTENU INTERNE --- */
-    display: none; /* Caché par défaut, géré par JS */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    background: #174743; /* Fond des sous-cartes */
+    display: none; /* Caché par défaut */
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Centre le contenu, mais attention si scroll */
+    justify-content: flex-start; /* Contenu aligné en haut */
     padding: 1.5rem;
     text-align: center;
-
-    /* --- VISIBILITÉ & ORDRE --- */
-    z-index: 100; /* Au-dessus de tout le reste */
-    opacity: 0; /* Invisible au départ pour l'animation GSAP */
-    overflow-y: auto; /* Active le scroll si le contenu dépasse */
-
-    /* --- IMPORTANT : PAS DE TRANSFORMATIONS 3D ICI --- */
-    /* On ne met PAS de rotateY, translateZ ou transform-style ici */
+    z-index: 100; /* Au-dessus du reste (sauf gender-selection) */
+    opacity: 0; /* Invisible pour animation GSAP */
+    overflow-y: auto; /* Scroll si contenu dépasse */
 }
-/* === Éléments de Contenu === */
+
+/* === Éléments de Contenu Communs === */
 h1 {
     font-size: 2.2rem;
     color: #F4E1C1;
@@ -188,7 +163,7 @@ p {
     line-height: 1.5;
 }
 
-.profile-pic {
+.profile-pic { /* Photo sur la carte back */
     width: 110px;
     height: 110px;
     object-fit: cover;
@@ -198,30 +173,27 @@ p {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* --- AJUSTER L'ESPACEMENT DANS LES SOUS-CARTES --- */
+/* Espacement dans les sous-cartes (pour éviter scrollbar Passions) */
 .sub-card h1 {
-    font-size: 2rem; /* Titre légèrement plus petit ? */
-    margin-top: 0.5rem; /* Un peu d'espace en haut */
-    margin-bottom: 1rem; /* Espace après le titre */
+    font-size: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .sub-card p {
-    font-size: 1.05rem; /* Texte légèrement plus petit ? */
-    margin-bottom: 0.65rem; /* Moins d'espace entre les passions */
-    line-height: 1.4; /* Ajuster si besoin */
+    font-size: 1.05rem;
+    margin-bottom: 0.65rem; /* Espacement réduit */
+    line-height: 1.4;
 }
 
-/* Mettre plus d'espace juste avant le bouton Retour */
 .sub-card p:last-of-type {
-     margin-bottom: 1.5rem; /* Espace accru avant le bouton */
+     margin-bottom: 1.5rem; /* Espace avant bouton retour */
 }
 
-/* Positionner le bouton en bas */
-.sub-card .btn {
-    margin-top: auto; /* Astuce flexbox pour pousser le bouton en bas */
-    margin-bottom: 0.5rem; /* Petite marge en dessous du bouton */
+.sub-card .btn { /* Bouton retour en bas */
+    margin-top: auto;
+    margin-bottom: 0.5rem;
 }
-/* --- FIN AJUSTEMENTS --- */
 
 /* === Boutons === */
 .btn {
@@ -231,26 +203,26 @@ p {
     font-weight: 700;
     border-radius: 999px;
     text-decoration: none;
-    background-color: #1B6B65;
+    background-color: #1B6B65; /* Couleur bouton standard */
     color: white;
     margin: 0.4rem;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-    -webkit-tap-highlight-color: transparent; /* Enlève le highlight bleu/gris au tap sur mobile */
+    -webkit-tap-highlight-color: transparent; /* Mobile tap highlight */
 }
 
 .btn:hover {
-    background-color: #16564E;
+    background-color: #16564E; /* Assombrir au survol */
 }
 
 .btn:active {
-    transform: scale(0.96);
+    transform: scale(0.96); /* Effet d'enfoncement */
     background-color: #134740;
 }
 
-.btn.insta-btn {
+.btn.insta-btn { /* Style spécifique bouton Insta */
     background-color: #C13584;
 }
 .btn.insta-btn:hover {
@@ -261,14 +233,14 @@ p {
 }
 
 
-/* Indice pour cliquer sur le front */
+/* === Animation indice doigt === */
 .tap-hint {
     display: block;
     margin-top: 1rem;
     font-size: 1.5rem;
     animation: bounce 1.5s infinite;
-    user-select: none; /* Empêche la sélection du doigt */
-    -webkit-user-select: none; /* Safari */
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 @keyframes bounce {
