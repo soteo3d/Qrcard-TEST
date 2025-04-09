@@ -32,20 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(genderSelection, { opacity: 0, duration: 0.4, onComplete: () => {
                 genderSelection.style.display = 'none';
                 // Afficher le conteneur principal de la carte
+                // Dans script.js, listener btnFemme
+
                 if (cardContainer) {
-                    cardContainer.style.display = 'block'; // Rendre visible dans le layout
-                    // Animer son apparition
+                    cardContainer.style.display = 'block';
                     gsap.fromTo(cardContainer,
-                        {opacity: 0, scale: 0.95}, // Départ
-                        {opacity: 1, scale: 1, duration: 0.5, delay: 0.1, ease: 'power1.out'} // Arrivée
-                                 // AJOUT : Nettoyer le transform inline après l'animation
-                        onComplete: () => {
-                            console.log("Animation GSAP cardContainer terminée, nettoyage transform.");
-                            cardContainer.style.transform = ''; // Essaye de vider le style transform inline
-                            }
-                        // FIN AJOUT
-                    );
-                }
+                        { opacity: 0, scale: 0.95 }, // Départ
+                        { // Arrivée
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.5,
+                            delay: 0.1,
+                            ease: 'power1.out', // <<< LA VIRGULE EST AJOUTÉE ICI
+                            onComplete: () => {
+                                console.log("Animation GSAP cardContainer terminée, nettoyage transform.");
+                                cardContainer.style.transform = ''; // Nettoyer le transform inline
+            }
+        } // Fin de l'objet d'arrivée
+    ); // Fin de gsap.fromTo
+}
             }});
         });
     }
