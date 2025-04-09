@@ -29,16 +29,21 @@
       max-width: 360px;
       height: 500px;
       position: relative;
-      transition: transform 0.6s ease;
+      transition: transform 0.8s ease;/* Animation du flip */
+      transform-style: preserve-3d;/* Active l'espace 3D pour les enfants */
+    }
+    /* Classe à ajouter/retirer avec JS */
+    .card-container.is-flipped {
+      transform: rotateY(180deg);
     }
 
-    .card, .sub-card {
+    .card{
       position: absolute;
       width: 100%;
       height: 100%;
       border-radius: 2rem;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      display: none;
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -54,9 +59,21 @@
 
     .card.back {
       background: linear-gradient(135deg, #0A1D1C, #071614);
+      transform: rotateY(180deg); /* Positionné au dos initialement */
     }
 
     .sub-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      display: none; /* Caché initialement */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
       background: #0F2A2B;
     }
 
@@ -161,38 +178,63 @@
     const cardPassions = document.getElementById('cardPassions');
     const clickSound = document.getElementById('clickSound');
 
-    let hasFlipped = false;
+    let currentVisibleSubCard = null; // Pour savoir quelle sous-carte est visible
+// Flip initial
 
-    cardContainer.addEventListener('click', () => {
-      if (!hasFlipped) {
-        showCard(backCard);
-        clickSound.play();
-        hasFlipped = true;
+     if (event.target === cardContainer || event.target === frontCard || frontCard.contains(event.target)) {
+        if (!cardContainer.classList.contains('is-flipped') && currentVisibleSubCard === null) {
+            cardContainer.classList.add('is-flipped');
+            clickSound.play(); // Joue le son au flip
+        }
       }
-    });
+    });    
 
-    document.getElementById('btnMoi').addEventListener('click', (e) => {
-      e.stopPropagation();
-      showCard(cardMoi);
-    });
+// Boutons sur la carte "back"
+document.getElementById('btnMoi').addEventListener('click', (e) => {
+    e.stopPropagation(); // Empêche le clic de remonter au container et de le retourner
+    showSubCard(cardMoi);
+});
 
-    document.getElementById('btnPassions').addEventListener('click', (e) => {
-      e.stopPropagation();
-      showCard(cardPassions);
-    });
+document.getElementById('btnPassions').addEventListener('click', (e) => {
+    e.stopPropagation();
+    showSubCard(cardPassions);
+});
 
-    function showCard(cardToShow) {
-      // Cacher tout
-      [frontCard, backCard, cardMoi, cardPassions].forEach(el => el.style.display = 'none');
-
-      // Montrer la bonne
-      cardToShow.style.display = 'flex';
-      gsap.fromTo(cardToShow, {opacity: 0, y: 40}, {opacity: 1, y: 0, duration: 0.5});
+// Fonction pour afficher une sous-carte
+function showSubCard(cardToShow) {
+    // Cache l'ancienne sous-carte si une était visible
+    if (currentVisibleSubCard) {
+        gsap.to(currentVisibleSubCard, { opacity: 0, duration: 0.3, onComplete: () => {
+            currentVisibleSubCard.style.display = 'none';
+            displayNewSubCard(cardToShow);
+        }});
+    } else {
+        displayNewSubCard(cardToShow);
     }
+}
 
-    function showBack() {
-      showCard(backCard);
+function displayNewSubCard(cardToShow) {
+    cardToShow.style.display = 'flex';
+    cardToShow.style.opacity = 0; // Commence invisible pour l'animation GSAP
+    // Assure-toi que la carte "back" reste visible en dessous mais cachée par la sub-card
+    backCard.style.opacity = 1; // Ou une autre méthode pour qu'elle reste dans le flux si nécessaire
+    gsap.to(cardToShow, { opacity: 1, y: 0, duration: 0.5 });
+    currentVisibleSubCard = cardToShow;
+}
+
+// Fonction pour retourner à la carte "back" depuis une sous-carte
+function showBack() {
+    if (currentVisibleSubCard) {
+        gsap.to(currentVisibleSubCard, { opacity: 0, y: 40, duration: 0.5, onComplete: () => {
+            currentVisibleSubCard.style.display = 'none';
+            currentVisibleSubCard = null;
+            // Pas besoin de re-montrer backCard explicitement car il est toujours là derrière
+        }});
     }
+     // Optionnel: si tu veux retourner au front quand on clique sur retour (moins logique)
+     // cardContainer.classList.remove('is-flipped');
+}
+
   </script>
 </body>
 </html>
