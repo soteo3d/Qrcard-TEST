@@ -103,6 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!alreadyFlipped && !subCardVisible) {
                 // Ajouter la classe qui déclenche la rotation CSS
                 cardContainer.classList.add('is-flipped');
+                if (navigator.vibrate) { // Vérifier si le navigateur supporte l'API Vibration
+                navigator.vibrate(80); // Vibration courte (80 millisecondes) - ajuste si besoin
+            }
                 // Jouer le son du flip
                 if (clickSound) {
                     clickSound.volume = 0.4; // Ajuster volume
@@ -175,6 +178,19 @@ document.addEventListener('DOMContentLoaded', () => {
             { opacity: 0, y: 20 }, // État de départ
             { opacity: 1, y: 0, duration: 0.4, ease: 'power1.out' } // État d'arrivée
         );
+        const elementsToAnimate = cardToShow.querySelectorAll('h1, p, .btn');
+
+            // Animer ces éléments avec un décalage (stagger)
+        gsap.from(elementsToAnimate, {
+            opacity: 0,        // Commence invisible
+            y: 15,             // Commence légèrement plus bas
+            duration: 0.35,    // Durée de l'animation de chaque élément
+            ease: 'power1.out',
+            stagger: 0.08,     // Délai entre l'animation de chaque élément (en secondes)
+            delay: 0.2         // Délai avant de commencer cette animation de texte (après l'apparition de la carte)
+        });
+
+        
     }
 
     // === Fonction pour le Bouton Retour des Sous-Cartes ===
