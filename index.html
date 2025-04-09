@@ -1,240 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Théophile--TEST</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <style>
-    /* === CSS === */
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Raleway', sans-serif;
-      background: #4DB6AC;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      perspective: 1000px;
-    }
-
-    .card-container {
-      width: 90%;
-      max-width: 360px;
-      height: 500px;
-      position: relative;
-      transition: transform 0.8s ease;/* Animation du flip */
-      transform-style: preserve-3d;/* Active l'espace 3D pour les enfants */
-    }
-    /* Classe à ajouter/retirer avec JS */
-    .card-container.is-flipped {
-      transform: rotateY(180deg);
-    }
-
-    .card{
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 2rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-      backface-visibility: hidden;
-    }
-
-    .card.front {
-      background: linear-gradient(135deg, #1A3C40, #0D2F32);
-      display: flex;
-    }
-
-    .card.back {
-      background: linear-gradient(135deg, #0A1D1C, #071614);
-      transform: rotateY(180deg); /* Positionné au dos initialement */
-    }
-
-    .sub-card {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 2rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      display: none; /* Caché initialement */
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-      background: #0F2A2B;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      color: #F4E1C1;
-      margin-bottom: 0.5rem;
-      margin-top: 0;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: #F4E1C1;
-      margin-bottom: 1.5rem;
-    }
-
-    .profile-pic {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin: 1rem 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 999px;
-      text-decoration: none;
-      background-color: #1B6B65;
-      color: white;
-      margin: 0.3rem;
-      transition: background 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #166253;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Théophile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- === HTML === -->
-  <div class="card-container" id="cardContainer">
-    <!-- Recto -->
-    <div class="card front" id="frontCard">
-      <h1 style="position: relative; top: -25px;">Théophile</h1>
-      <p>Appuie pour découvrir ✨</p>
+    <div class="card-container" id="cardContainer">
+        <div class="card front" id="frontCard">
+            <h1 style="position: relative; top: -25px;">Théophile</h1>
+            <p>Appuie pour découvrir ✨</p>
+            <span class="tap-hint">👆</span>
+        </div>
+
+        <div class="card back" id="backCard">
+            <h1 style="position: relative; top: -25px;">Théophile</h1>
+            <img src="https://raw.githubusercontent.com/soteo3d/QRcard/media/oui.JPG" alt="Photo de Théophile" class="profile-pic">
+            <p>On ne se serait pas croisé ?</p>
+            <button class="btn" id="btnMoi">Moi</button>
+            <button class="btn" id="btnPassions">Passions</button>
+            <a class="btn insta-btn" href="https://www.instagram.com/theophile_drd/profilecard/" target="_blank">Insta ? 📸</a>
+        </div>
+
+        <div class="sub-card" id="cardMoi">
+            <h1>Moi</h1>
+            <p>Âge: 27</p>
+            <p>Lieu: Saint-Germain</p>
+            <p>Travail: Finance (mais plus fun après 18h 😉)</p>
+            <p>Personnalité: Drôle, Attentionné, Aventureux, Calme, Créatif</p>
+            <button class="btn" onclick="showBack()">↩ Retour</button>
+        </div>
+
+        <div class="sub-card" id="cardPassions">
+            <h1>Passions</h1>
+            <p>Moto 🏍️ (Les virages, c'est la vie !)</p>
+            <p>Cuisine 🍳 (Surtout pour partager)</p>
+            <p>Astronomie 🔭 (La tête dans les étoiles)</p>
+            <p>Jeux vidéo 🎮 (Pour décompresser)</p>
+            <p>Épicurien moderne 🍷 (Bon vivant assumé)</p>
+            <button class="btn" onclick="showBack()">↩ Retour</button>
+        </div>
     </div>
 
-    <!-- Verso -->
-    <div class="card back" id="backCard">
-      <h1 style="position: relative; top: -25px;">Théophile</h1>
-      <img src="https://raw.githubusercontent.com/soteo3d/Qrcard-TEST/media/oui.JPG" alt="Photo de Théophile" class="profile-pic">
-      <p>On ne se serait pas croisé ?</p>
-      <button class="btn" id="btnMoi">Moi</button>
-      <button class="btn" id="btnPassions">Passions</button>
-     <a class="btn" href="https://www.instagram.com/theophile_drd/profilecard/" target="_blank">Insta ?</a>
-    </div>
+    <audio id="clickSound" src="https://www.myinstants.com/media/sounds/rizz-sound-effect.mp3" preload="auto"></audio>
 
-    <!-- Sous-carte Moi -->
-    <div class="sub-card" id="cardMoi">
-      <h1>Moi</h1>
-       <p>Âge: 27</p>
-      <p>Lieu: Saint-Germain</p>
-      <p>Travail: Finance</p>
-      <p>Personnalité: Drôle, Attentionné, Aventureux, Calme, Créatif</p>
-      <button class="btn" onclick="showBack()">↩ Retour</button>
-    </div>
-
-    <!-- Sous-carte Passions -->
-    <div class="sub-card" id="cardPassions">
-      <h1>Passions</h1>
-      <p>Moto 🏍️</p>
-      <p>Cuisine 🍳</p>
-      <p>Astronomie 🔭</p>
-      <p>Jeux vidéo 🎮</p>
-      <p>Épicurien moderne 🍷</p>
-      <button class="btn" onclick="showBack()">↩ Retour</button>
-    </div>
-
-    <!-- insta card
-    <div class="sub-card" id="insta">
-    <h1>Instagram</h1>
-    <a class="btn" href="https://www.instagram.com/theophile_drd/profilecard/" target="_blank">Insta ?</a>
-    <button class="btn" onclick="goBack()">Retour</button>
-  </div>
-        -->
-  </div>
-
-  <!-- 🔊 Son -->
-  <audio id="clickSound" src="https://www.myinstants.com/media/sounds/rizz-sound-effect.mp3" preload="auto"></audio>
-
-  <script>
-    // === JS ===
-    const cardContainer = document.getElementById('cardContainer');
-    const frontCard = document.getElementById('frontCard');
-    const backCard = document.getElementById('backCard');
-    const cardMoi = document.getElementById('cardMoi');
-    const cardPassions = document.getElementById('cardPassions');
-    const clickSound = document.getElementById('clickSound');
-
-    let currentVisibleSubCard = null; // Pour savoir quelle sous-carte est visible
-// Flip initial
-
-     if (event.target === cardContainer || event.target === frontCard || frontCard.contains(event.target)) {
-        if (!cardContainer.classList.contains('is-flipped') && currentVisibleSubCard === null) {
-            cardContainer.classList.add('is-flipped');
-            clickSound.play(); // Joue le son au flip
-        }
-      }
-    });    
-
-// Boutons sur la carte "back"
-document.getElementById('btnMoi').addEventListener('click', (e) => {
-    e.stopPropagation(); // Empêche le clic de remonter au container et de le retourner
-    showSubCard(cardMoi);
-});
-
-document.getElementById('btnPassions').addEventListener('click', (e) => {
-    e.stopPropagation();
-    showSubCard(cardPassions);
-});
-
-// Fonction pour afficher une sous-carte
-function showSubCard(cardToShow) {
-    // Cache l'ancienne sous-carte si une était visible
-    if (currentVisibleSubCard) {
-        gsap.to(currentVisibleSubCard, { opacity: 0, duration: 0.3, onComplete: () => {
-            currentVisibleSubCard.style.display = 'none';
-            displayNewSubCard(cardToShow);
-        }});
-    } else {
-        displayNewSubCard(cardToShow);
-    }
-}
-
-function displayNewSubCard(cardToShow) {
-    cardToShow.style.display = 'flex';
-    cardToShow.style.opacity = 0; // Commence invisible pour l'animation GSAP
-    // Assure-toi que la carte "back" reste visible en dessous mais cachée par la sub-card
-    backCard.style.opacity = 1; // Ou une autre méthode pour qu'elle reste dans le flux si nécessaire
-    gsap.to(cardToShow, { opacity: 1, y: 0, duration: 0.5 });
-    currentVisibleSubCard = cardToShow;
-}
-
-// Fonction pour retourner à la carte "back" depuis une sous-carte
-function showBack() {
-    if (currentVisibleSubCard) {
-        gsap.to(currentVisibleSubCard, { opacity: 0, y: 40, duration: 0.5, onComplete: () => {
-            currentVisibleSubCard.style.display = 'none';
-            currentVisibleSubCard = null;
-            // Pas besoin de re-montrer backCard explicitement car il est toujours là derrière
-        }});
-    }
-     // Optionnel: si tu veux retourner au front quand on clique sur retour (moins logique)
-     // cardContainer.classList.remove('is-flipped');
-}
-
-  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
