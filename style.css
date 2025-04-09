@@ -75,27 +75,29 @@ body {
     border-radius: 1rem; /* Coins arrondis pour l'image */
 }
 
-/* style.css - Nouvelle tentative de Debug pour .card-container */
+/* style.css - Debugging Attempt 3 - Style Minimaliste */
 .card-container {
-    width: 90%;
-    max-width: 360px;
-    height: 500px;
+    /* --- Dimensions Fixes Simples --- */
+    width: 300px !important;
+    height: 400px !important;
 
-    /* --- CHANGEMENT POSITIONNEMENT POUR TEST --- */
-    position: fixed; /* On force comme les sub-cards */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centrage absolu */
-    /* --- FIN CHANGEMENT --- */
+    /* --- Positionnement Fixe Simple --- */
+    position: fixed !important;
+    top: 50px !important;   /* Position depuis le haut */
+    left: 50px !important;  /* Position depuis la gauche */
+    /* PAS de transform: translate() ici */
 
-    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-    transform-style: preserve-3d; /* Gardé pour le flip interne */
-    display: none; /* Garder l'état initial caché */
+    /* --- On enlève tout ce qui est lié à l'animation/3D --- */
+    /* transition: ... ; (ENLEVÉ) */
+    /* transform-style: ... ; (ENLEVÉ) */
 
-    /* --- DEBUG STYLES (Garder pour l'instant) --- */
+    display: none !important; /* Garder état initial caché */
+
+    /* --- Styles de Debug Visibles --- */
     background-color: red !important;
-    z-index: 10;
-    /* --- FIN DEBUG --- */
+    z-index: 1000 !important; /* Z-index très élevé */
+    border: 5px solid yellow !important; /* Bordure pour être sûr */
+    /* --- Fin Debug --- */
 }
 
 /* Classe ajoutée par JS pour retourner */
