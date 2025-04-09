@@ -69,31 +69,39 @@ body {
     z-index: 1; /* IMPORTANT: Doit être en dessous du recto initialement */
 }
 
-/* === Sous-Cartes (Moi, Passions) === */
+/* === Sous-Cartes (Positionnées indépendamment au-dessus de tout) === */
 .sub-card {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    /* --- POSITIONNEMENT FIXE --- */
+    position: fixed; /* Fixe par rapport à la fenêtre du navigateur */
+    top: 50%;       /* Positionné à 50% du haut */
+    left: 50%;      /* Positionné à 50% de la gauche */
+    transform: translate(-50%, -50%); /* Astuce pour centrer parfaitement l'élément */
+
+    /* --- TAILLE (Similaire à la carte principale) --- */
+    width: 90%;
+    max-width: 360px;
+    height: 500px; /* Ajuste si besoin, ou utilise min-height/max-height */
+
+    /* --- STYLE VISUEL --- */
     border-radius: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    display: none;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35); /* Ombre un peu plus marquée */
+    background: #174743; /* Ou une autre couleur si tu veux contraster */
+
+    /* --- CONTENU INTERNE --- */
+    display: none; /* Caché par défaut, géré par JS */
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Centre le contenu, mais attention si scroll */
     padding: 1.5rem;
     text-align: center;
-    background: #174743;
-    z-index: 3;
-    overflow-y: auto;
-    opacity: 0;
 
-    /* --- NOUVELLE TENTATIVE DE CORRECTION --- */
-    transform-style: flat; /* On force le style de transformation par défaut (pas preserve-3d) */
-    /* On essaie de la décaler très légèrement sur l'axe Z pour la sortir du plan du parent, tout en annulant la rotation Y */
-    transform: translateZ(1px) rotateY(0deg);
-    /* --- FIN NOUVELLE TENTATIVE --- */
+    /* --- VISIBILITÉ & ORDRE --- */
+    z-index: 100; /* Au-dessus de tout le reste */
+    opacity: 0; /* Invisible au départ pour l'animation GSAP */
+    overflow-y: auto; /* Active le scroll si le contenu dépasse */
+
+    /* --- IMPORTANT : PAS DE TRANSFORMATIONS 3D ICI --- */
+    /* On ne met PAS de rotateY, translateZ ou transform-style ici */
 }
 /* === Éléments de Contenu === */
 h1 {
