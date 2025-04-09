@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     gsap.fromTo(cardContainer,
                         {opacity: 0, scale: 0.95}, // Départ
                         {opacity: 1, scale: 1, duration: 0.5, delay: 0.1, ease: 'power1.out'} // Arrivée
+                                 // AJOUT : Nettoyer le transform inline après l'animation
+                        onComplete: () => {
+                            console.log("Animation GSAP cardContainer terminée, nettoyage transform.");
+                            cardContainer.style.transform = ''; // Essaye de vider le style transform inline
+                            }
+                        // FIN AJOUT
                     );
                 }
             }});
