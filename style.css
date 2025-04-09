@@ -37,7 +37,7 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    z-index: 200;
+    z-index: 200; /* Au premier plan au début */
 }
 
 .gender-selection h1 {
@@ -67,7 +67,7 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    z-index: 199;
+    z-index: 199; /* Juste derrière la sélection de genre */
 }
 
 .result-homme img {
@@ -85,7 +85,7 @@ body {
     position: relative; /* Positionné par rapport au flux normal (centré par body flex) */
     transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animation du flip */
     transform-style: preserve-3d; /* Active la 3D pour les enfants */
-    display: none; /* Caché initialement (sera affiché par JS) - SANS !important */
+    display: none; /* Caché initialement (affiché par JS) */
 }
 
 /* Classe ajoutée par JS pour retourner le conteneur */
@@ -143,7 +143,7 @@ body {
     justify-content: flex-start; /* Contenu aligné en haut */
     padding: 1.5rem;
     text-align: center;
-    z-index: 100; /* Au-dessus du reste (sauf gender-selection) */
+    z-index: 100; /* Au-dessus du reste (sauf gender-selection/result-homme) */
     opacity: 0; /* Invisible pour animation GSAP */
     overflow-y: auto; /* Scroll si contenu dépasse */
 }
@@ -191,7 +191,7 @@ p {
 }
 
 .sub-card .btn { /* Bouton retour en bas */
-    margin-top: auto;
+    margin-top: auto; /* Pousse le bouton vers le bas */
     margin-bottom: 0.5rem;
 }
 
@@ -232,7 +232,6 @@ p {
     background-color: #8A235A;
 }
 
-
 /* === Animation indice doigt === */
 .tap-hint {
     display: block;
@@ -243,6 +242,7 @@ p {
     -webkit-user-select: none;
 }
 
+/* Animation keyframes pour le doigt */
 @keyframes bounce {
   0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
   40% {transform: translateY(-10px);}
