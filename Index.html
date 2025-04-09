@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Théophile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    /* === CSS === */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Raleway', sans-serif;
+      background: #4DB6AC;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      perspective: 1000px;
+    }
+
+    .card-container {
+      width: 90%;
+      max-width: 360px;
+      height: 500px;
+      position: relative;
+      transition: transform 0.6s ease;
+    }
+
+    .card, .sub-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      backface-visibility: hidden;
+    }
+
+    .card.front {
+      background: linear-gradient(135deg, #1A3C40, #0D2F32);
+      display: flex;
+    }
+
+    .card.back {
+      background: linear-gradient(135deg, #0A1D1C, #071614);
+    }
+
+    .sub-card {
+      background: #0F2A2B;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #F4E1C1;
+      margin-bottom: 0.5rem;
+      margin-top: 0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #F4E1C1;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 1rem 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 999px;
+      text-decoration: none;
+      background-color: #1B6B65;
+      color: white;
+      margin: 0.3rem;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #166253;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === HTML === -->
+  <div class="card-container" id="cardContainer">
+    <!-- Recto -->
+    <div class="card front" id="frontCard">
+      <h1 style="position: relative; top: -25px;">Théophile</h1>
+      <p>Appuie pour découvrir ✨</p>
+    </div>
+
+    <!-- Verso -->
+    <div class="card back" id="backCard">
+      <h1 style="position: relative; top: -25px;">Théophile</h1>
+      <img src="https://raw.githubusercontent.com/soteo3d/QRcard/media/oui.JPG" alt="Photo de Théophile" class="profile-pic">
+      <p>On ne se serait pas croisé ?</p>
+      <button class="btn" id="btnMoi">Moi</button>
+      <button class="btn" id="btnPassions">Passions</button>
+     <a class="btn" href="https://www.instagram.com/theophile_drd/profilecard/" target="_blank">Insta ?</a>
+    </div>
+
+    <!-- Sous-carte Moi -->
+    <div class="sub-card" id="cardMoi">
+      <h1>Moi</h1>
+       <p>Âge: 27</p>
+      <p>Lieu: Saint-Germain</p>
+      <p>Travail: Finance</p>
+      <p>Personnalité: Drôle, Attentionné, Aventureux, Calme, Créatif</p>
+      <button class="btn" onclick="showBack()">↩ Retour</button>
+    </div>
+
+    <!-- Sous-carte Passions -->
+    <div class="sub-card" id="cardPassions">
+      <h1>Passions</h1>
+      <p>Moto 🏍️</p>
+      <p>Cuisine 🍳</p>
+      <p>Astronomie 🔭</p>
+      <p>Jeux vidéo 🎮</p>
+      <p>Épicurien moderne 🍷</p>
+      <button class="btn" onclick="showBack()">↩ Retour</button>
+    </div>
+
+    <!-- insta card
+    <div class="sub-card" id="insta">
+    <h1>Instagram</h1>
+    <a class="btn" href="https://www.instagram.com/theophile_drd/profilecard/" target="_blank">Insta ?</a>
+    <button class="btn" onclick="goBack()">Retour</button>
+  </div>
+        -->
+  </div>
+
+  <!-- 🔊 Son -->
+  <audio id="clickSound" src="https://www.myinstants.com/media/sounds/rizz-sound-effect.mp3" preload="auto"></audio>
+
+  <script>
+    // === JS ===
+    const cardContainer = document.getElementById('cardContainer');
+    const frontCard = document.getElementById('frontCard');
+    const backCard = document.getElementById('backCard');
+    const cardMoi = document.getElementById('cardMoi');
+    const cardPassions = document.getElementById('cardPassions');
+    const clickSound = document.getElementById('clickSound');
+
+    let hasFlipped = false;
+
+    cardContainer.addEventListener('click', () => {
+      if (!hasFlipped) {
+        showCard(backCard);
+        clickSound.play();
+        hasFlipped = true;
+      }
+    });
+
+    document.getElementById('btnMoi').addEventListener('click', (e) => {
+      e.stopPropagation();
+      showCard(cardMoi);
+    });
+
+    document.getElementById('btnPassions').addEventListener('click', (e) => {
+      e.stopPropagation();
+      showCard(cardPassions);
+    });
+
+    function showCard(cardToShow) {
+      // Cacher tout
+      [frontCard, backCard, cardMoi, cardPassions].forEach(el => el.style.display = 'none');
+
+      // Montrer la bonne
+      cardToShow.style.display = 'flex';
+      gsap.fromTo(cardToShow, {opacity: 0, y: 40}, {opacity: 1, y: 0, duration: 0.5});
+    }
+
+    function showBack() {
+      showCard(backCard);
+    }
+  </script>
+</body>
+</html>
