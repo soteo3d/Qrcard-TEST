@@ -1,144 +1,173 @@
-// script.js
-
+// Attend que le contenu HTML soit chargé
 document.addEventListener('DOMContentLoaded', () => {
 
-    // === NOUVEAU : Récupération des éléments de sélection ===
+    // === Récupération des éléments ===
     const genderSelection = document.getElementById('genderSelection');
     const btnFemme = document.getElementById('btnFemme');
     const btnHomme = document.getElementById('btnHomme');
     const resultHomme = document.getElementById('resultHomme');
     const hommeSound = document.getElementById('hommeSound');
-    const cardContainer = document.getElementById('cardContainer'); // On a déjà cette ligne
-
-    // === Récupération des éléments existants ===
+    const cardContainer = document.getElementById('cardContainer');
     const frontCard = document.getElementById('frontCard');
-    const backCard = document.getElementById('backCard');
+    const backCard = document.getElementById('backCard'); // Garder référence si besoin futur
     const cardMoi = document.getElementById('cardMoi');
     const cardPassions = document.getElementById('cardPassions');
     const clickSound = document.getElementById('clickSound'); // Son du flip
 
-    let currentVisibleSubCard = null;
+    let currentVisibleSubCard = null; // Pour suivre la sous-carte visible
 
-    // === NOUVEAU : Logique de sélection initiale ===
-
-    // Au chargement, s'assurer que seul genderSelection est visible
-    // (Normalement géré par CSS display:none, mais double sécurité)
+    // === Configuration initiale (sécurité, même si géré par CSS) ===
     if (genderSelection) genderSelection.style.display = 'flex';
     if (cardContainer) cardContainer.style.display = 'none';
     if (resultHomme) resultHomme.style.display = 'none';
     if (cardMoi) cardMoi.style.display = 'none';
     if (cardPassions) cardPassions.style.display = 'none';
 
+    // === Logique de sélection initiale ===
 
-  
-// Clic sur "Une Femme"
-if (btnFemme) {
-    btnFemme.addEventListener('click', () => {
-        console.log("Choix : Femme - Début"); // Log 1
-        gsap.to(genderSelection, { opacity: 0, duration: 0.4, onComplete: () => {
-            console.log("Sélection genre cachée"); // Log 2
-            genderSelection.style.display = 'none';
-            if (cardContainer) {
-                console.log("Tentative d'affichage cardContainer"); // Log 3
-                // --- TEST : Affichage direct sans animation ---
-                cardContainer.style.display = 'block'; // Force l'affichage
-                cardContainer.style.opacity = '1'; // Force l'opacité
-                console.log("cardContainer mis en display:block et opacity:1"); // Log 4
-
-                // On vérifie le style calculé après un court délai
-                setTimeout(() => {
-                    const styles = window.getComputedStyle(cardContainer);
-                    console.log("Style calculé display:", styles.display); // Log 5
-                    console.log("Style calculé opacity:", styles.opacity); // Log 6
-                }, 100); // Attente de 100ms
-
-                /* --- Animation GSAP originale (temporairement désactivée) ---
-                gsap.fromTo(cardContainer,
-                    {opacity: 0, scale: 0.9},
-                    {opacity: 1, scale: 1, duration: 0.5, delay: 0.1, onComplete: () => {
-                         console.log("Animation GSAP cardContainer terminée");
-                    }}
-                );
-                */
-               // --- FIN TEST ---
-
-            } else {
-                console.error("ERREUR: Element cardContainer non trouvé !");
-            }
-        }});
-    });
-}
-
-    // Clic sur "Un Homme"
-    if (btnHomme) {
-        btnHomme.addEventListener('click', () => {
-            console.log("Choix : Homme");
-            // Jouer le son homme
-            if (hommeSound) {
-                hommeSound.volume = 0.6;
-                hommeSound.play().catch(e => console.error("Erreur lecture son homme:", e));
-            }
-            // Cacher la sélection
+    // Clic sur "Une Femme"
+    if (btnFemme) {
+        btnFemme.addEventListener('click', () => {
+            // Cacher la sélection avec animation
             gsap.to(genderSelection, { opacity: 0, duration: 0.4, onComplete: () => {
                 genderSelection.style.display = 'none';
-                // Afficher le résultat homme
-                if (resultHomme) {
-                    resultHomme.style.display = 'flex';
-                    // Animer l'apparition
-                     gsap.fromTo(resultHomme, {opacity: 0, scale: 0.9}, {opacity: 1, scale: 1, duration: 0.5, delay: 0.1});
+                // Afficher le conteneur principal de la carte
+                if (cardContainer) {
+                    cardContainer.style.display = 'block'; // Rendre visible dans le layout
+                    // Animer son apparition
+                    gsap.fromTo(cardContainer,
+                        {opacity: 0, scale: 0.95}, // Départ
+                        {opacity: 1, scale: 1, duration: 0.5, delay: 0.1, ease: 'power1.out'} // Arrivée
+                    );
                 }
             }});
         });
     }
 
-    // === FIN Logique de sélection initiale ===
-
-
-    // === Logique existante pour le flip et les sous-cartes ===
-    // (Cette partie reste inchangée, elle ne sera active que si
-    // le cardContainer devient visible après avoir cliqué "Femme")
-
-    // Logique du Flip Initial
-    if (frontCard) {
-        frontCard.addEventListener('click', () => {
-           // ... (code existant pour ajouter .is-flipped) ...
-           if (clickSound) { /* ... */ }
+    // Clic sur "Un Homme"
+    if (btnHomme) {
+        btnHomme.addEventListener('click', () => {
+            // Jouer le son homme
+            if (hommeSound) {
+                hommeSound.volume = 0.6; // Ajuster volume si besoin
+                hommeSound.play().catch(e => console.error("Erreur lecture son homme:", e));
+            }
+            // Cacher la sélection avec animation
+            gsap.to(genderSelection, { opacity: 0, duration: 0.4, onComplete: () => {
+                genderSelection.style.display = 'none';
+                // Afficher le résultat homme
+                if (resultHomme) {
+                    resultHomme.style.display = 'flex'; // Rendre visible
+                    // Animer son apparition
+                     gsap.fromTo(resultHomme,
+                        {opacity: 0, scale: 0.95}, // Départ
+                        {opacity: 1, scale: 1, duration: 0.5, delay: 0.1, ease: 'power1.out'} // Arrivée
+                    );
+                }
+            }});
         });
     }
 
-    // Logique des Boutons sur la Carte "Back"
+    // === Logique du Flip et des Sous-Cartes ===
+
+    // Flip au clic sur la carte avant
+    if (frontCard) {
+        frontCard.addEventListener('click', () => {
+            // Ne retourner que si la carte n'est PAS déjà retournée
+            // et si aucune sous-carte n'est visible (pour éviter conflit)
+            if (!cardContainer.classList.contains('is-flipped') && currentVisibleSubCard === null) {
+                cardContainer.classList.add('is-flipped');
+                // Jouer le son du flip (optionnel)
+                if (clickSound) {
+                    clickSound.volume = 0.4;
+                    clickSound.play().catch(e => console.error("Erreur lecture audio flip:", e));
+                }
+            }
+        });
+    }
+
+    // Boutons sur la Carte "Back" ("Moi" et "Passions")
     const btnMoiElement = document.getElementById('btnMoi');
     if (btnMoiElement) {
         btnMoiElement.addEventListener('click', (e) => {
-            // ... (code existant avec stopPropagation et showSubCard) ...
+            e.stopPropagation(); // Empêche le clic de déclencher autre chose
+            showSubCard(cardMoi);
         });
     }
     const btnPassionsElement = document.getElementById('btnPassions');
      if (btnPassionsElement) {
         btnPassionsElement.addEventListener('click', (e) => {
-             // ... (code existant avec stopPropagation et showSubCard) ...
+            e.stopPropagation();
+            showSubCard(cardPassions);
         });
     }
 
+    // Fonction pour MONTRER une sous-carte spécifique
+    function showSubCard(cardToShow) {
+        // Ne rien faire si on clique sur le bouton de la carte déjà visible
+        if (currentVisibleSubCard === cardToShow) {
+            return;
+        }
+        // Si une autre sous-carte est visible, la cacher d'abord
+        if (currentVisibleSubCard) {
+            const cardToHide = currentVisibleSubCard;
+            currentVisibleSubCard = null; // Marquer comme en transition
 
-    // Fonctions pour Gérer l'Affichage des Sous-Cartes (showSubCard, displayNewSubCard)
-    // (Ces fonctions restent inchangées)
-    function showSubCard(cardToShow) { /* ... code existant ... */ }
-    function displayNewSubCard(cardToShow) { /* ... code existant ... */ }
+            gsap.to(cardToHide, {
+                opacity: 0,
+                duration: 0.3, // Disparition rapide
+                onComplete: () => {
+                    cardToHide.style.display = 'none';
+                    displayNewSubCard(cardToShow); // Afficher la nouvelle après
+                }
+            });
+        } else {
+            // Si aucune n'est visible, afficher directement la nouvelle
+            displayNewSubCard(cardToShow);
+        }
+    }
 
+    // Fonction interne pour afficher et animer la nouvelle sous-carte
+    function displayNewSubCard(cardToShow) {
+        currentVisibleSubCard = cardToShow; // Mettre à jour la carte visible
+        cardToShow.style.display = 'flex'; // Rendre l'élément visible
+        cardToShow.scrollTop = 0; // Remonter en haut si scrollable
 
-    // Fonction pour le Bouton Retour (Reste globale)
-    window.showBack = function() { /* ... code existant ... */ }
+        // Animation d'apparition avec GSAP
+        gsap.fromTo(cardToShow,
+            { opacity: 0, y: 20 }, // Départ: invisible et un peu bas
+            { opacity: 1, y: 0, duration: 0.4, ease: 'power1.out' } // Arrivée: visible et à sa place
+        );
+    }
 
+    // Fonction pour le Bouton Retour (Doit être globale via window)
+    window.showBack = function() {
+        if (currentVisibleSubCard) {
+            const cardToHide = currentVisibleSubCard;
+            currentVisibleSubCard = null; // Indiquer qu'aucune sous-carte n'est active
 
-    // Préchargement (Ajouter les nouveaux éléments)
+            gsap.to(cardToHide, {
+                opacity: 0,
+                y: 20, // Effet de sortie vers le bas
+                duration: 0.4,
+                ease: 'power1.in',
+                onComplete: () => {
+                    cardToHide.style.display = 'none'; // Cacher l'élément après animation
+                }
+            });
+        }
+    }
+
+    // === Préchargement des médias ===
+    // Images
     const profilePic = new Image();
-    profilePic.src = 'https://raw.githubusercontent.com/soteo3d/QRcard/media/oui.JPG';
-    // NOUVEAU: Précharger l'image homme
+    profilePic.src = 'https://raw.githubusercontent.com/soteo3d/QRcard/media/oui.JPG'; // Vérifie ce chemin si besoin
     const hommePic = new Image();
-    hommePic.src = 'https://raw.githubusercontent.com/soteo3d/QRcard/media/homme.png';
+    // Vérifie le chemin exact de l'image homme dans TON dépôt Qrcard-TEST
+    hommePic.src = 'https://raw.githubusercontent.com/soteo3d/Qrcard-TEST/media/homme.png'; // ou homme.JPG ?
 
+    // Sons
     if (clickSound) clickSound.load();
-    if (hommeSound) hommeSound.load(); // NOUVEAU: Précharger son homme
+    if (hommeSound) hommeSound.load();
 
 }); // Fin de l'écouteur DOMContentLoaded
