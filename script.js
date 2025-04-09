@@ -30,22 +30,44 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cardPassions) cardPassions.style.display = 'none';
 
 
-    // Clic sur "Une Femme"
-    if (btnFemme) {
-        btnFemme.addEventListener('click', () => {
-            console.log("Choix : Femme");
-            // Cacher la sélection
-            gsap.to(genderSelection, { opacity: 0, duration: 0.4, onComplete: () => {
-                genderSelection.style.display = 'none';
-                // Afficher le conteneur principal de la carte
-                if (cardContainer) {
-                    cardContainer.style.display = 'block'; // Ou 'flex' si besoin pour son layout interne
-                    // Animer l'apparition du conteneur
-                    gsap.fromTo(cardContainer, {opacity: 0, scale: 0.9}, {opacity: 1, scale: 1, duration: 0.5, delay: 0.1});
-                }
-            }});
-        });
-    }
+  
+// Clic sur "Une Femme"
+if (btnFemme) {
+    btnFemme.addEventListener('click', () => {
+        console.log("Choix : Femme - Début"); // Log 1
+        gsap.to(genderSelection, { opacity: 0, duration: 0.4, onComplete: () => {
+            console.log("Sélection genre cachée"); // Log 2
+            genderSelection.style.display = 'none';
+            if (cardContainer) {
+                console.log("Tentative d'affichage cardContainer"); // Log 3
+                // --- TEST : Affichage direct sans animation ---
+                cardContainer.style.display = 'block'; // Force l'affichage
+                cardContainer.style.opacity = '1'; // Force l'opacité
+                console.log("cardContainer mis en display:block et opacity:1"); // Log 4
+
+                // On vérifie le style calculé après un court délai
+                setTimeout(() => {
+                    const styles = window.getComputedStyle(cardContainer);
+                    console.log("Style calculé display:", styles.display); // Log 5
+                    console.log("Style calculé opacity:", styles.opacity); // Log 6
+                }, 100); // Attente de 100ms
+
+                /* --- Animation GSAP originale (temporairement désactivée) ---
+                gsap.fromTo(cardContainer,
+                    {opacity: 0, scale: 0.9},
+                    {opacity: 1, scale: 1, duration: 0.5, delay: 0.1, onComplete: () => {
+                         console.log("Animation GSAP cardContainer terminée");
+                    }}
+                );
+                */
+               // --- FIN TEST ---
+
+            } else {
+                console.error("ERREUR: Element cardContainer non trouvé !");
+            }
+        }});
+    });
+}
 
     // Clic sur "Un Homme"
     if (btnHomme) {
