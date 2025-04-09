@@ -70,21 +70,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === Logique du Flip et des Sous-Cartes ===
 
-    // Flip au clic sur la carte avant
-    if (frontCard) {
-        frontCard.addEventListener('click', () => {
-            // Ne retourner que si la carte n'est PAS déjà retournée
-            // et si aucune sous-carte n'est visible (pour éviter conflit)
-            if (!cardContainer.classList.contains('is-flipped') && currentVisibleSubCard === null) {
-                cardContainer.classList.add('is-flipped');
-                // Jouer le son du flip (optionnel)
-                if (clickSound) {
-                    clickSound.volume = 0.4;
-                    clickSound.play().catch(e => console.error("Erreur lecture audio flip:", e));
-                }
+    // Dans script.js, à l'intérieur de DOMContentLoaded
+
+// Flip au clic sur la carte avant
+if (frontCard) {
+    frontCard.addEventListener('click', () => {
+        console.log("Clic sur la carte avant détecté."); // Log 1
+
+        // Vérifier les conditions avant de retourner
+        let alreadyFlipped = cardContainer.classList.contains('is-flipped');
+        let subCardVisible = currentVisibleSubCard !== null;
+        console.log("Déjà retournée ?", alreadyFlipped); // Log 2
+        console.log("Sous-carte visible ?", subCardVisible); // Log 3
+
+        if (!alreadyFlipped && !subCardVisible) {
+            console.log("Conditions remplies : Ajout de la classe .is-flipped"); // Log 4
+            cardContainer.classList.add('is-flipped');
+
+            // Jouer le son du flip (optionnel)
+            if (clickSound) {
+                clickSound.volume = 0.4;
+                clickSound.play().catch(e => console.error("Erreur lecture audio flip:", e));
             }
-        });
-    }
+        } else {
+            console.log("Conditions NON remplies pour retourner."); // Log 5
+        }
+    });
+}
 
     // Boutons sur la Carte "Back" ("Moi" et "Passions")
     const btnMoiElement = document.getElementById('btnMoi');
