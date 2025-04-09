@@ -75,21 +75,27 @@ body {
     border-radius: 1rem; /* Coins arrondis pour l'image */
 }
 
-
-/* === Conteneur de Carte === */
+/* style.css - Nouvelle tentative de Debug pour .card-container */
 .card-container {
     width: 90%;
     max-width: 360px;
     height: 500px;
-    position: relative;
-    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-    transform-style: preserve-3d; /* IMPORTANT: Nécessaire pour la rotation 3D des enfants */
-    display: none; /* CACHÉ au chargement */
-     /* --- LIGNES DE DEBUG À AJOUTER TEMPORAIREMENT --- */
-    background-color: red !important; /* Pour voir si le conteneur apparaît */
-    z-index: 10;                  /* Pour s'assurer qu'il est devant le body */
-    /* --- FIN DES LIGNES DE DEBUG --- */
 
+    /* --- CHANGEMENT POSITIONNEMENT POUR TEST --- */
+    position: fixed; /* On force comme les sub-cards */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrage absolu */
+    /* --- FIN CHANGEMENT --- */
+
+    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform-style: preserve-3d; /* Gardé pour le flip interne */
+    display: none; /* Garder l'état initial caché */
+
+    /* --- DEBUG STYLES (Garder pour l'instant) --- */
+    background-color: red !important;
+    z-index: 10;
+    /* --- FIN DEBUG --- */
 }
 
 /* Classe ajoutée par JS pour retourner */
