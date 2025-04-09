@@ -85,6 +85,10 @@ body {
     transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
     transform-style: preserve-3d; /* IMPORTANT: Nécessaire pour la rotation 3D des enfants */
     display: none; /* CACHÉ au chargement */
+     /* --- LIGNES DE DEBUG À AJOUTER TEMPORAIREMENT --- */
+    background-color: red !important; /* Pour voir si le conteneur apparaît */
+    z-index: 10;                  /* Pour s'assurer qu'il est devant le body */
+    /* --- FIN DES LIGNES DE DEBUG --- */
 
 }
 
