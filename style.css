@@ -88,6 +88,12 @@ body {
     z-index: 3; /* Doit apparaître au-dessus de la carte "back" */
     overflow-y: auto;
     opacity: 0; /* Commencer invisible pour l'animation GSAP */
+
+     /* --- CORRECTION AJOUTÉE --- */
+    /* Force la sous-carte à ne pas être retournée, même si le parent l'est */
+    transform: rotateY(0deg) !important;
+    /* On ajoute !important pour être sûr que ça surcharge une éventuelle héritage non désiré */
+    /* --- FIN CORRECTION --- */
 }
 
 /* === Éléments de Contenu === */
