@@ -11,7 +11,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Raleway', sans-serif;
-    background: #4DB6AC; /* Fond bleu-vert */
+    background-image:url('https://raw.githubusercontent.com/soteo3d/Qrcard-TEST/media/topography.svg');
+    background-repeat: repeat;/* Fond bleu-vert */
     display: flex; /* Pour centrer le .card-container initialement */
     justify-content: center;
     align-items: center;
