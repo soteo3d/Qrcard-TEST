@@ -4,7 +4,6 @@
 }
 
 html {
-    /* Empêche le léger "rebond" sur mobile lors du défilement */
     overscroll-behavior: none;
 }
 
@@ -12,23 +11,23 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Raleway', sans-serif;
-    background: #4DB6AC; /* Couleur de fond générale */
+    background: #4DB6AC;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Utiliser min-height pour flexibilité */
-    perspective: 1000px; /* Active la perspective pour l'effet 3D */
-    overflow: hidden; /* Empêche les barres de défilement si contenu dépasse */
+    min-height: 100vh;
+    perspective: 1000px; /* IMPORTANT: Active la perspective pour l'effet 3D */
+    overflow: hidden;
 }
 
 /* === Conteneur de Carte === */
 .card-container {
     width: 90%;
     max-width: 360px;
-    height: 500px; /* Hauteur fixe pour la carte */
+    height: 500px;
     position: relative;
-    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animation de flip plus douce */
-    transform-style: preserve-3d; /* Nécessaire pour la rotation 3D des enfants */
+    transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform-style: preserve-3d; /* IMPORTANT: Nécessaire pour la rotation 3D des enfants */
 }
 
 /* Classe ajoutée par JS pour retourner */
@@ -38,31 +37,36 @@ body {
 
 /* === Cartes Principales (Recto/Verso) === */
 .card {
-    position: absolute; /* Permet de superposer recto et verso */
+    position: absolute; /* IMPORTANT: Permet de superposer recto et verso */
     width: 100%;
     height: 100%;
-    border-radius: 1.5rem; /* Moins arrondi ? */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* Ombre plus prononcée */
+    top: 0;  /* Assurer la position */
+    left: 0; /* Assurer la position */
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centre le contenu verticalement */
-    padding: 1.5rem; /* Un peu moins de padding */
+    justify-content: center;
+    padding: 1.5rem;
     text-align: center;
-    backface-visibility: hidden; /* Cache le côté non visible pendant la rotation */
-    overflow: hidden; /* Empêche contenu de déborder de la carte arrondie */
+    backface-visibility: hidden; /* IMPORTANT: Cache le côté non visible pendant la rotation (Appliqué aux deux via cette classe commune) */
+    overflow: hidden;
+    /* On s'assure qu'il n'y a pas de rotation par défaut ici */
+    transform: rotateY(0deg);
 }
 
 .card.front {
     background: linear-gradient(135deg, #1A3C40, #0D2F32);
-    z-index: 2; /* S'assurer que le front est devant initialement */
-    cursor: pointer; /* Indique qu'on peut cliquer */
+    z-index: 2; /* IMPORTANT: Doit être au-dessus du verso initialement */
+    cursor: pointer;
+    /* Aucune transformation ici, hérite de rotateY(0deg) de .card */
 }
 
 .card.back {
     background: linear-gradient(135deg, #0A1D1C, #071614);
-    transform: rotateY(180deg); /* Positionné au dos initialement */
-    z-index: 1;
+    transform: rotateY(180deg); /* IMPORTANT: Positionné au dos initialement */
+    z-index: 1; /* IMPORTANT: Doit être en dessous du recto initialement */
 }
 
 /* === Sous-Cartes (Moi, Passions) === */
@@ -80,64 +84,66 @@ body {
     justify-content: center;
     padding: 1.5rem;
     text-align: center;
-    background: #174743; /* Couleur légèrement différente pour distinguer */
+    background: #174743;
     z-index: 3; /* Doit apparaître au-dessus de la carte "back" */
-    overflow-y: auto; /* Permet de scroller si le contenu dépasse */
+    overflow-y: auto;
+    opacity: 0; /* Commencer invisible pour l'animation GSAP */
 }
 
 /* === Éléments de Contenu === */
 h1 {
-    font-size: 2.2rem; /* Ajustement taille */
+    font-size: 2.2rem;
     color: #F4E1C1;
     margin-bottom: 0.5rem;
     margin-top: 0;
 }
 
 p {
-    font-size: 1.1rem; /* Ajustement taille */
-    color: #E0D8C7; /* Légèrement moins blanc */
-    margin-bottom: 1rem; /* Espacement */
-    line-height: 1.5; /* Meilleure lisibilité */
+    font-size: 1.1rem;
+    color: #E0D8C7;
+    margin-bottom: 1rem;
+    line-height: 1.5;
 }
 
 .profile-pic {
-    width: 110px; /* Ajustement taille */
+    width: 110px;
     height: 110px;
     object-fit: cover;
     border-radius: 50%;
-    margin: 0.8rem 0 1.2rem 0; /* Ajustement marges */
-    border: 3px solid #F4E1C1; /* Ajout d'une petite bordure */
+    margin: 0.8rem 0 1.2rem 0;
+    border: 3px solid #F4E1C1;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 /* === Boutons === */
 .btn {
     display: inline-block;
-    padding: 0.7rem 1.5rem; /* Plus large */
+    padding: 0.7rem 1.5rem;
     font-size: 1rem;
-    font-weight: 700; /* Plus gras */
+    font-weight: 700;
     border-radius: 999px;
     text-decoration: none;
     background-color: #1B6B65;
     color: white;
     margin: 0.4rem;
-    border: none; /* Assurer qu'il n'y a pas de bordure par défaut */
+    border: none;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    -webkit-tap-highlight-color: transparent; /* Enlève le highlight bleu/gris au tap sur mobile */
 }
 
-.btn:hover { /* Effet sur ordinateur, peut être ignoré mais ne gêne pas */
+.btn:hover {
     background-color: #16564E;
 }
 
-.btn:active { /* Effet au clic/tap */
-    transform: scale(0.96); /* Léger enfoncement */
+.btn:active {
+    transform: scale(0.96);
     background-color: #134740;
 }
 
-.btn.insta-btn { /* Bouton Insta un peu différent ? */
-    background-color: #C13584; /* Couleur Insta-like */
+.btn.insta-btn {
+    background-color: #C13584;
 }
 .btn.insta-btn:hover {
     background-color: #A1286B;
@@ -153,6 +159,8 @@ p {
     margin-top: 1rem;
     font-size: 1.5rem;
     animation: bounce 1.5s infinite;
+    user-select: none; /* Empêche la sélection du doigt */
+    -webkit-user-select: none; /* Safari */
 }
 
 @keyframes bounce {
