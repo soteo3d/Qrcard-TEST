@@ -78,24 +78,23 @@ body {
     left: 0;
     border-radius: 1.5rem;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    display: none; /* Caché par défaut (géré par JS) */
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
     text-align: center;
     background: #174743;
-    z-index: 3; /* Doit apparaître au-dessus de la carte "back" */
+    z-index: 3;
     overflow-y: auto;
-    opacity: 0; /* Commencer invisible pour l'animation GSAP */
+    opacity: 0;
 
-     /* --- CORRECTION AJOUTÉE --- */
-    /* Force la sous-carte à ne pas être retournée, même si le parent l'est */
-    transform: rotateY(0deg) !important;
-    /* On ajoute !important pour être sûr que ça surcharge une éventuelle héritage non désiré */
-    /* --- FIN CORRECTION --- */
+    /* --- NOUVELLE TENTATIVE DE CORRECTION --- */
+    transform-style: flat; /* On force le style de transformation par défaut (pas preserve-3d) */
+    /* On essaie de la décaler très légèrement sur l'axe Z pour la sortir du plan du parent, tout en annulant la rotation Y */
+    transform: translateZ(1px) rotateY(0deg);
+    /* --- FIN NOUVELLE TENTATIVE --- */
 }
-
 /* === Éléments de Contenu === */
 h1 {
     font-size: 2.2rem;
