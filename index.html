@@ -123,12 +123,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           }
         } catch (error) {
           console.error('Erreur réseau ou autre lors de l appel de la fonction:', error);
-        } finally {
-           // Quoi qu'il arrive (succès ou échec), on redirige l'utilisateur
-           const targetUrl = event.target.href;
-           console.log("Redirection vers:", targetUrl); // Log avant redirection
-           window.location.href = targetUrl; 
-        }
+        } 
       }
 
       // Ajoute les écouteurs d'événements
