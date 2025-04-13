@@ -1,19 +1,17 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Hello there</title>
     
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EDBMY4LZ93"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-EDBMY4LZ93');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDBMY4LZ93"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-EDBMY4LZ93');
+    </script>
 
     <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icon.png">
@@ -22,97 +20,105 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T88WV3HD"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T88WV3HD"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="gender-selection" id="genderSelection">
         <h1>Tu es ?</h1>
         <p style="color: #E0D8C7; margin-bottom: 1.5rem;">(Promis, c'est juste pour savoir comment te saluer 😉)</p>
-        <a href="html/femme.html" class="btn gender-btn" id="link-femme">Une Femme</a>
-        <a href="html/homme.html" class="btn gender-btn" id="link-homme">Un Homme</a>
-    </div> <div class="result-homme" id="resultHomme">
-        <img src="https://raw.githubusercontent.com/soteo3d/Qrcard-TEST/media/homme.png" alt="Image drôle pour les hommes"> <!--CHEMIN A MODIFIER-->
-        <p style="color: #E0D8C7; margin-top: 1rem;">Merci pour le scan 😉</p>
-        </div> <div class="card-container" id="cardContainer">
-        <div class="card front" id="frontCard">
+        
+        <a href="html/femme.html" class="btn gender-btn" id="link-femme">Une Femme</a> 
+        <a href="html/homme.html" class="btn gender-btn" id="link-homme">Un Homme</a> 
+        </div>
+
+    <div class="result-homme" id="resultHomme" style="display: none;"> <img src="https://raw.githubusercontent.com/soteo3d/Qrcard-TEST/media/homme.png" alt="Image drôle pour les hommes"> <p style="color: #E0D8C7; margin-top: 1rem;">Merci pour le scan 😉</p>
+    </div>
+
+    <div class="card-container" id="cardContainer" style="display: none;"> <div class="card front" id="frontCard">
             <h1 style="position: relative; top: -25px;">Théophile</h1>
             <p>Appuie pour découvrir ✨</p>
             <span class="tap-hint">👆</span>
-        </div> <div class="card back" id="backCard">
-           <h1 style="position: relative; top: -25px;">Théophile</h1>
-           <img src="https://raw.githubusercontent.com/soteo3d/QRcard/media/oui.JPG" alt="Photo de Théophile" class="profile-pic"><!--CHEMIN A MODIFIER-->
-           <p>On ne se serait pas croisé ?</p>
-           <button class="btn" id="btnMoi">Moi</button>
-           <button class="btn" id="btnPassions">Passions</button>
-           <a class="btn insta-btn" href="https://www.instagram.com/theophile_drd/profilecard/" target="_blank">Insta ? 📸</a>
-        </div> </div> <div class="sub-card" id="cardMoi">
+        </div>
+        <div class="card back" id="backCard">
+            <h1 style="position: relative; top: -25px;">Théophile</h1>
+            <img src="https://raw.githubusercontent.com/soteo3d/QRcard/media/oui.JPG" alt="Photo de Théophile" class="profile-pic"><p>On ne se serait pas croisé ?</p>
+            <button class="btn" id="btnMoi">Moi</button>
+            <button class="btn" id="btnPassions">Passions</button>
+            <a class="btn insta-btn" href="https://www.instagram.com/theophile_drd/profilecard/" target="_blank">Insta ? 📸</a>
+        </div>
+    </div>
+
+    <div class="sub-card" id="cardMoi">
         <h1>Moi</h1>
         <p>Âge: 27</p>
         <p>Lieu: Saint-Germain</p>
         <p>Travail: Finance</p>
         <p>Personnalité: Drôle, Attentionné, Aventureux, Calme, Créatif</p>
-        <button class="btn" onclick="showBack()">↩ Retour</button>
-    </div> <div class="sub-card" id="cardPassions">
+        <button class="btn" onclick="showBack()">↩ Retour</button> </div>
+
+    <div class="sub-card" id="cardPassions">
         <h1>Passions</h1>
         <p>Moto 🏍️</p>
-        <p>Cuisine 🍳)</p>
-        <p>Astronomie 🔭</p>
+        <p>Cuisine 🍳</p> <p>Astronomie 🔭</p>
         <p>Jeux vidéo 🎮 </p>
         <p>Épicurien moderne 🍷</p>
-        <button class="btn" onclick="showBack()">↩ Retour</button>
-    </div> <audio id="clickSound" src="https://www.myinstants.com/media/sounds/rizz-sound-effect.mp3" preload="auto"></audio><!--CHEMIN A MODIFIER-->
-    <audio id="hommeSound" src="https://raw.githubusercontent.com/soteo3d/Qrcard-TEST/media/audio.mp3" preload="auto"></audio><!--CHEMIN A MODIFIER-->
+        <button class="btn" onclick="showBack()">↩ Retour</button> </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="script.js"></script>
-    <script type="module">
+    <audio id="clickSound" src="https://www.myinstants.com/media/sounds/rizz-sound-effect.mp3" preload="auto"></audio><audio id="hommeSound" src="https://raw.githubusercontent.com/soteo3d/Qrcard-TEST/media/audio.mp3" preload="auto"></audio><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script> <script type="module">
       // Importe les fonctions Firebase nécessaires (v9+)
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"; // Adapte la version si besoin !
-      // Importe Analytics si Firebase te l'a inclus et que tu veux l'utiliser
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js"; // Adapte la version si besoin !
+      // <<< UTILISE LES URLS SDK EXACTES FOURNIES PAR TA CONSOLE FIREBASE !!! >>>
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"; 
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js"; // Si tu l'utilises
 
-      // 1. TA configuration Firebase (celle que tu as fournie)
+      // TA configuration Firebase 
       const firebaseConfig = {
-        apiKey: "AIzaSyD-ZOt111dwR0Su7pkjtfzzpAuntYoMgTQ", // Ton API Key réelle
+        apiKey: "AIzaSyD-ZOt111dwR0Su7pkjtfzzpAuntYoMgTQ", // <<< TA CLE API REELLE
         authDomain: "qrcard-7081d.firebaseapp.com",
         projectId: "qrcard-7081d",
-        storageBucket: "qrcard-7081d.firebasestorage.app", // Celle que tu as fournie
+        storageBucket: "qrcard-7081d.firebasestorage.app", 
         messagingSenderId: "357248780425",
         appId: "1:357248780425:web:7e52079decd8a90fbade58",
-        measurementId: "G-KT2RBKFG7K" // Optionnel
+        measurementId: "G-KT2RBKFG7K" 
       };
 
-      // 2. Initialise Firebase (v9+)
-      const app = initializeApp(firebaseConfig);
-      // Initialise Analytics si importé (optionnel)
-      // const analytics = getAnalytics(app); 
-      console.log("Firebase Initialized (v9 modular)."); // Log pour vérifier dans la console navigateur
+      // Initialise Firebase
+      try {
+          const app = initializeApp(firebaseConfig);
+          // const analytics = getAnalytics(app); 
+          console.log("Firebase Initialized (v9 modular)."); 
+      } catch (e) {
+          console.error("Erreur initialisation Firebase:", e);
+      }
 
-      // --- Code pour compter les clics ---
-
-      // 3. Colle ici l'URL de TA Cloud Function déployée
-      // (Celle obtenue après 'firebase deploy --only functions' réussi)
-      const functionUrl = 'https://recordclick-t4i7rmw3va-ew.a.run.app'; // <--- METS TON URL DE FONCTION ICI !
+      // L'URL de TA Cloud Function déployée
+      // <<< REMPLACE PAR TON URL ...run.app (SANS ESPACE A LA FIN) !!! >>>
+      const functionUrl = 'https://recordclick-t4i7rmw3va-ew.a.run.app'; 
 
       const linkHomme = document.getElementById('link-homme');
       const linkFemme = document.getElementById('link-femme');
 
       // Fonction pour gérer le clic
       async function handleClick(event, type) {
-        event.preventDefault(); // Empêche la navigation immédiate
+        event.preventDefault(); 
         console.log(`Clic détecté sur : ${type}. Appel de la fonction à ${functionUrl}...`);
+        
+        if (!functionUrl || functionUrl.includes("[region]-[projet-id]")) {
+            console.error("L'URL de la fonction (functionUrl) n'est pas correctement définie dans le script ! Vérifiez la constante.");
+            // On n'arrête pas forcément, mais l'appel fetch échouera.
+            // Tu pourrais vouloir gérer l'affichage ici aussi si l'URL est mauvaise.
+        }
 
         try {
           // Appel à la Cloud Function via fetch
           const response = await fetch(functionUrl, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json', // Important
+              'Content-Type': 'application/json', 
             },
-            body: JSON.stringify({ type: type }) // Envoie 'homme' ou 'femme'
+            body: JSON.stringify({ type: type }) 
           });
 
           if (response.ok) {
@@ -123,77 +129,60 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           }
         } catch (error) {
           console.error('Erreur réseau ou autre lors de l appel de la fonction:', error);
-        } 
-      }
-     // Dans index.html -> <script type="module"> -> function handleClick
-   // REMPLACE TOUT LE CONTENU du bloc 'finally' par ceci :
+        } finally {
+           // Gestion de l'affichage après le clic (succès ou échec de l'appel)
+           console.log("Gestion de l'affichage après clic sur:", type);
 
-   finally {
-       // ON NE REDIRIGE PLUS ICI.
-       // A la place, on gère l'affichage :
+           const genderSelectionDiv = document.getElementById('genderSelection');
+           const hommeResultDiv = document.getElementById('resultHomme');
+           const cardContainerDiv = document.getElementById('cardContainer'); // La carte Théophile
 
-       console.log("Gestion de l'affichage après clic sur:", type);
+           if (genderSelectionDiv) {
+               genderSelectionDiv.style.display = 'none'; 
+               console.log("Div 'genderSelection' cachée.");
+           } else {
+               console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'genderSelection'. Vérifie le HTML.");
+           }
 
-       // Récupère les éléments à cacher/montrer par leur ID
-       const genderSelectionDiv = document.getElementById('genderSelection');
-       const hommeResultDiv = document.getElementById('resultHomme');
-       const cardContainerDiv = document.getElementById('cardContainer'); // La carte Théophile
-
-       // Cache la section de sélection du genre
-       if (genderSelectionDiv) {
-           genderSelectionDiv.style.display = 'none'; 
-           console.log("Div 'genderSelection' cachée.");
-       } else {
-           console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'genderSelection'. Vérifie le HTML.");
-       }
-
-       // Affiche la bonne section en fonction du type ('homme' ou 'femme')
-       if (type === 'homme') {
-           // Si l'utilisateur a cliqué sur Homme
-           if (hommeResultDiv) {
-               // Affiche la div "Homme" (vérifie 'block' ou 'flex' selon ton CSS)
-               hommeResultDiv.style.display = 'block'; 
-               console.log("Div 'resultHomme' affichée.");
-               
-               // Tente de jouer le son homme
-               const hommeSound = document.getElementById('hommeSound');
-               if (hommeSound) {
-                   hommeSound.play().catch(e => console.error("Erreur lecture son homme:", e));
+           if (type === 'homme') {
+               if (hommeResultDiv) {
+                   hommeResultDiv.style.display = 'block'; // Ou 'flex', selon ton CSS
+                   console.log("Div 'resultHomme' affichée.");
+                   const hommeSound = document.getElementById('hommeSound');
+                   if (hommeSound) {
+                       hommeSound.play().catch(e => console.error("Erreur lecture son homme:", e));
+                   } else {
+                       console.warn("Élément audio 'hommeSound' non trouvé.");
+                   }
                } else {
-                   console.warn("Élément audio 'hommeSound' non trouvé.");
+                    console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'resultHomme'. Vérifie le HTML.");
                }
-           } else {
-                console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'resultHomme'. Vérifie le HTML.");
+               if (cardContainerDiv) { cardContainerDiv.style.display = 'none'; }
+           } else if (type === 'femme') {
+               if (cardContainerDiv) {
+                   cardContainerDiv.style.display = 'block'; // Ou 'flex', vérifie ton CSS
+                   console.log("Div 'cardContainer' affichée.");
+               } else {
+                    console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'cardContainer'. Vérifie le HTML.");
+               }
+                if (hommeResultDiv) { hommeResultDiv.style.display = 'none'; }
            }
-           // S'assure que l'autre section (carte Théo) est cachée
-           if (cardContainerDiv) {
-               cardContainerDiv.style.display = 'none'; 
-           }
-
-       } else if (type === 'femme') {
-           // Si l'utilisateur a cliqué sur Femme
-           if (cardContainerDiv) {
-               // Affiche la carte "Théophile" (vérifie 'block' ou 'flex' selon ton CSS)
-               cardContainerDiv.style.display = 'block'; 
-               console.log("Div 'cardContainer' affichée.");
-           } else {
-                console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'cardContainer'. Vérifie le HTML.");
-           }
-           // S'assure que l'autre section (Homme) est cachée
-            if (hommeResultDiv) {
-               hommeResultDiv.style.display = 'none'; 
-           }
-       }
-    } // Fin du bloc finally
+        } // Fin du bloc finally
+      } // Fin de la fonction handleClick
 
       // Ajoute les écouteurs d'événements
       if (linkHomme) {
           linkHomme.addEventListener('click', (event) => handleClick(event, 'homme'));
           console.log("Écouteur ajouté pour Homme.");
+      } else {
+          console.error("L'élément avec l'ID 'link-homme' n'a pas été trouvé ! Vérifie l'ID dans le HTML.");
       }
+
       if (linkFemme) {
          linkFemme.addEventListener('click', (event) => handleClick(event, 'femme'));
          console.log("Écouteur ajouté pour Femme.");
+      } else {
+          console.error("L'élément avec l'ID 'link-femme' n'a pas été trouvé ! Vérifie l'ID dans le HTML.");
       }
 
     </script>
