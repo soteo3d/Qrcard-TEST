@@ -31,6 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gestionnaire d'événement pour le clic sur "Une Femme"
     if (btnFemme) {
         btnFemme.addEventListener('click', () => {
+            // === AJOUT : Envoi de l'événement à Google Analytics ===
+            if (typeof gtag === 'function') { // Vérifie si gtag est bien chargé
+                gtag('event', 'select_gender', { // Nom de l'événement personnalisé
+                  'gender_selected': 'femme',     // Paramètre 1: Le genre choisi
+                  'button_text': btnFemme.textContent // Paramètre 2 (Optionnel): Texte du bouton
+                });
+                // console.log("GA4 Event Sent: select_gender (femme)"); // Pour vérifier dans la console
+            }
+            // === FIN AJOUT GA4 ===
             // Cacher la sélection avec une animation de fondu (GSAP)
             gsap.to(genderSelection, {
                 opacity: 0,
@@ -65,9 +74,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gestionnaire d'événement pour le clic sur "Un Homme"
     if (btnHomme) {
         btnHomme.addEventListener('click', () => {
+            // === AJOUT : Envoi de l'événement à Google Analytics ===
+             if (typeof gtag === 'function') { // Vérifie si gtag est bien chargé
+                 gtag('event', 'select_gender', { // Nom de l'événement personnalisé
+                   'gender_selected': 'homme',     // Paramètre 1: Le genre choisi
+                   'button_text': btnHomme.textContent // Paramètre 2 (Optionnel): Texte du bouton
+                 });
+                 // console.log("GA4 Event Sent: select_gender (homme)"); // Pour vérifier dans la console
+             }
+            // === FIN AJOUT GA4 ===
             // Jouer le son spécifique "Homme"
             if (hommeSound) {
-                hommeSound.volume = 0.6; // Ajuster volume si besoin
+                hommeSound.volume = 1; // Ajuster volume si besoin
                 // Utiliser .catch pour éviter les erreurs si la lecture échoue
                 hommeSound.play().catch(e => console.error("Erreur lecture son homme:", e));
             }
