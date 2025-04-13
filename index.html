@@ -125,6 +125,66 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           console.error('Erreur réseau ou autre lors de l appel de la fonction:', error);
         } 
       }
+     // Dans index.html -> <script type="module"> -> function handleClick
+   // REMPLACE TOUT LE CONTENU du bloc 'finally' par ceci :
+
+   finally {
+       // ON NE REDIRIGE PLUS ICI.
+       // A la place, on gère l'affichage :
+
+       console.log("Gestion de l'affichage après clic sur:", type);
+
+       // Récupère les éléments à cacher/montrer par leur ID
+       const genderSelectionDiv = document.getElementById('genderSelection');
+       const hommeResultDiv = document.getElementById('resultHomme');
+       const cardContainerDiv = document.getElementById('cardContainer'); // La carte Théophile
+
+       // Cache la section de sélection du genre
+       if (genderSelectionDiv) {
+           genderSelectionDiv.style.display = 'none'; 
+           console.log("Div 'genderSelection' cachée.");
+       } else {
+           console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'genderSelection'. Vérifie le HTML.");
+       }
+
+       // Affiche la bonne section en fonction du type ('homme' ou 'femme')
+       if (type === 'homme') {
+           // Si l'utilisateur a cliqué sur Homme
+           if (hommeResultDiv) {
+               // Affiche la div "Homme" (vérifie 'block' ou 'flex' selon ton CSS)
+               hommeResultDiv.style.display = 'block'; 
+               console.log("Div 'resultHomme' affichée.");
+               
+               // Tente de jouer le son homme
+               const hommeSound = document.getElementById('hommeSound');
+               if (hommeSound) {
+                   hommeSound.play().catch(e => console.error("Erreur lecture son homme:", e));
+               } else {
+                   console.warn("Élément audio 'hommeSound' non trouvé.");
+               }
+           } else {
+                console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'resultHomme'. Vérifie le HTML.");
+           }
+           // S'assure que l'autre section (carte Théo) est cachée
+           if (cardContainerDiv) {
+               cardContainerDiv.style.display = 'none'; 
+           }
+
+       } else if (type === 'femme') {
+           // Si l'utilisateur a cliqué sur Femme
+           if (cardContainerDiv) {
+               // Affiche la carte "Théophile" (vérifie 'block' ou 'flex' selon ton CSS)
+               cardContainerDiv.style.display = 'block'; 
+               console.log("Div 'cardContainer' affichée.");
+           } else {
+                console.error("ERREUR : Impossible de trouver l'élément avec l'ID 'cardContainer'. Vérifie le HTML.");
+           }
+           // S'assure que l'autre section (Homme) est cachée
+            if (hommeResultDiv) {
+               hommeResultDiv.style.display = 'none'; 
+           }
+       }
+    } // Fin du bloc finally
 
       // Ajoute les écouteurs d'événements
       if (linkHomme) {
