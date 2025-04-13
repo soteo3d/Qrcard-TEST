@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Compteurs Clics</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
+        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        .counts p { font-size: 1.2em; margin: 10px 0; color: #555; }
+        .counts span { font-weight: bold; color: #007bff; font-size: 1.5em; }
+        button { padding: 10px 20px; font-size: 1em; color: #fff; background-color: #dc3545; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; display: block; margin-left: auto; margin-right: auto; }
+        button:hover { background-color: #c82333; }
+        #status { margin-top: 15px; text-align: center; font-style: italic; color: green; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Statistiques des Clics</h1>
+        <div class="counts">
+            <p>Hommes : <span id="count-homme">Chargement...</span></p>
+            <p>Femmes : <span id="count-femme">Chargement...</span></p>
+        </div>
+        <button id="reset-button">Réinitialiser les compteurs</button>
+        <div id="status"></div> </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"; 
+        // Importe les fonctions Firestore nécessaires
+        import { getFirestore, doc, onSnapshot, updateDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"; // <<< UTILISE TON URL SDK FIRESTORE EXACTE
+
+        // TA configuration Firebase (la même que dans index.html)
+        const firebaseConfig = {
+          apiKey: "AIzaSyD-ZOt111dwR0Su7pkjtfzzpAuntYoMgTQ", // <<< TA CLE API REELLE
+          authDomain: "qrcard-7081d.firebaseapp.com",
+          projectId: "qrcard-7081d",
+          storageBucket: "qrcard-7081d.firebasestorage.app", 
+          messagingSenderId: "357248780425",
+          appId: "1:357248780425:web:7e52079decd8a90fbade58",
+          measurementId: "G-KT2RBKFG7K" 
+        };
+
+        // Initialise Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app); // Récupère l'instance Firestore
+        console.log("Firebase Initialized for Admin Page.");
+
+        // --- Affichage des compteurs ---
+        const countHommeSpan = document.getElementById('count-homme');
+        const countFemmeSpan = document.getElementById('
