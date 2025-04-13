@@ -48,4 +48,71 @@
 
         // --- Affichage des compteurs ---
         const countHommeSpan = document.getElementById('count-homme');
-        const countFemmeSpan = document.getElementById('
+        const countFemmeSpan = document.getElementById('count-femme');
+        const countsDocRefAdmin = doc(db, "counts", "clicks"); // Référence au document
+
+        // Écoute les changements en temps réel sur le document
+        onSnapshot(countsDocRefAdmin, (docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                console.log("Current data: ", data);
+                countHommeSpan.textContent = data.homme !== undefined ? data.homme : '0';
+                countFemmeSpan.textContent = data.femme !== undefined ? data.femme : '0';
+            } else {
+                // Le document n'existe pas (ou n'a pas encore été créé)
+                console.log("No such document! counts/clicks");
+                countHommeSpan.textContent = '0';
+                countFemmeSpan.textContent = '0';
+            }
+        }, (error) => {
+             console.error("Erreur lecture Firestore (Vérifie les règles de sécurité !): ", error);
+             countHommeSpan.textContent = 'Erreur lecture';
+             countFemmeSpan.textContent = 'Erreur lecture';
+        });
+
+        // --- Logique du bouton Reset ---
+        const resetButton = document.getElementById('reset-button');
+        const statusDiv = document.getElementById('status');
+        // !!! REMPLACE PAR L'URL DE TA FUTURE FONCTION 'resetCounts' !!!
+        // !!! REMPLACE PAR L'URL DE TA FUTURE FONCTION 'resetCounts' !!!
+        const resetFunctionUrl = 'https://europe-west1-qrcard-7081d.cloudfunctions.net/resetCounts';
+
+        resetButton.addEventListener('click', async () => {
+            if (!confirm("Es-tu sûr de vouloir remettre les compteurs à zéro ?")) {
+                return; // Annule si l'utilisateur clique sur Annuler
+            }
+
+            statusDiv.textContent = 'Réinitialisation en cours...';
+            statusDiv.style.color = 'orange';
+
+             if (!resetFunctionUrl || resetFunctionUrl === 'METTRE_URL_RESET_FUNCTION_ICI') {
+                 console.error("L'URL de la fonction de réinitialisation (resetFunctionUrl) n'est pas définie !");
+                 statusDiv.textContent = 'Erreur : URL de fonction non configurée.';
+                 statusDiv.style.color = 'red';
+                 return;
+             }
+
+            try {
+                // Appel à la Cloud Function pour réinitialiser
+                const response = await fetch(resetFunctionUrl, { method: 'POST' });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("Réinitialisation réussie:", result.message);
+                    statusDiv.textContent = 'Compteurs réinitialisés avec succès !';
+                    statusDiv.style.color = 'green';
+                } else {
+                    console.error('Erreur renvoyée par la fonction de réinitialisation:', response.status, await response.text());
+                    statusDiv.textContent = 'Erreur lors de la réinitialisation.';
+                     statusDiv.style.color = 'red';
+                }
+            } catch (error) {
+                console.error('Erreur réseau lors de l appel de la fonction de réinitialisation:', error);
+                statusDiv.textContent = 'Erreur réseau.';
+                statusDiv.style.color = 'red';
+            }
+        });
+
+    </script>
+    </body>
+</html>
