@@ -68,6 +68,83 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="script.js"></script>
+    <script type="module">
+      // Importe les fonctions Firebase nécessaires (v9+)
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"; // Adapte la version si besoin !
+      // Importe Analytics si Firebase te l'a inclus et que tu veux l'utiliser
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js"; // Adapte la version si besoin !
 
+      // 1. TA configuration Firebase (celle que tu as fournie)
+      const firebaseConfig = {
+        apiKey: "AIzaSyD-ZOt111dwR0Su7pkjtfzzpAuntYoMgTQ", // Ton API Key réelle
+        authDomain: "qrcard-7081d.firebaseapp.com",
+        projectId: "qrcard-7081d",
+        storageBucket: "qrcard-7081d.firebasestorage.app", // Celle que tu as fournie
+        messagingSenderId: "357248780425",
+        appId: "1:357248780425:web:7e52079decd8a90fbade58",
+        measurementId: "G-KT2RBKFG7K" // Optionnel
+      };
+
+      // 2. Initialise Firebase (v9+)
+      const app = initializeApp(firebaseConfig);
+      // Initialise Analytics si importé (optionnel)
+      // const analytics = getAnalytics(app); 
+      console.log("Firebase Initialized (v9 modular)."); // Log pour vérifier dans la console navigateur
+
+      // --- Code pour compter les clics ---
+
+      // 3. Colle ici l'URL de TA Cloud Function déployée
+      // (Celle obtenue après 'firebase deploy --only functions' réussi)
+      const functionUrl = 'https://recordclick-t4i7rmw3va-ew.a.run.app'; // <--- METS TON URL DE FONCTION ICI !
+
+      const linkHomme = document.getElementById('link-homme');
+      const linkFemme = document.getElementById('link-femme');
+
+      // Fonction pour gérer le clic
+      async function handleClick(event, type) {
+        event.preventDefault(); // Empêche la navigation immédiate
+        console.log(`Clic détecté sur : ${type}. Appel de la fonction à ${functionUrl}...`);
+
+        try {
+          // Appel à la Cloud Function via fetch
+          const response = await fetch(functionUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json', // Important
+            },
+            body: JSON.stringify({ type: type }) // Envoie 'homme' ou 'femme'
+          });
+
+          if (response.ok) {
+            const result = await response.json(); 
+            console.log(`Fonction exécutée avec succès: ${result.message}`);
+          } else {
+            console.error('Erreur renvoyée par la fonction:', response.status, await response.text());
+          }
+        } catch (error) {
+          console.error('Erreur réseau ou autre lors de l appel de la fonction:', error);
+        } finally {
+           // Quoi qu'il arrive (succès ou échec), on redirige l'utilisateur
+           const targetUrl = event.target.href;
+           console.log("Redirection vers:", targetUrl); // Log avant redirection
+           window.location.href = targetUrl; 
+        }
+      }
+
+      // Ajoute les écouteurs d'événements
+      if (linkHomme) {
+          linkHomme.addEventListener('click', (event) => handleClick(event, 'homme'));
+          console.log("Écouteur ajouté pour Homme.");
+      }
+      if (linkFemme) {
+         linkFemme.addEventListener('click', (event) => handleClick(event, 'femme'));
+         console.log("Écouteur ajouté pour Femme.");
+      }
+
+    </script>
+    </body>
+</html>
+        </body>
+    </html>
 </body>
 </html>
